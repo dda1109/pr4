@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<th:block th:fragment="header_login">
+    <div class="container">
+        <div class="navbar navbar-product">
+            <div class="logo">
+                <a href="/home"><img src="images/logo.png" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/products/0/page/1">Products</a></li>
+                    <li><a href="/login">Account</a></li>
+                </ul>
+            </nav>
+
+            <img class="menu-icon" onclick="menuToggle()" src="images/menu.png">
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

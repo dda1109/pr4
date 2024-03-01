@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/payment  .css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+</head>
+<body>
+<div class="container d-lg-flex">
+    <div class="box-1 bg-light user">
+        <div class="d-flex align-items-center mb-3">
+            <img alt=""
+                 class="pic rounded-circle" src="https://images.pexels.com/photos/4925916/pexels-photo-4925916.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+            <p class="ps-2 name">Oliur</p>
+        </div>
+        <div class="box-inner-1 pb-3 mb-3 ">
+            <div class="d-flex justify-content-between mb-3 userdetails">
+                <p class="fw-bold">Lightroom Presets</p>
+                <p class="fw-lighter"><span class="fas fa-dollar-sign"></span>33.00+</p>
+            </div>
+            <div class="carousel slide carousel-fade img-details" data-bs-interval="2000" data-bs-ride="carousel"
+                 id="my">
+                <div class="carousel-indicators">
+                    <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0"
+                            data-bs-target="#my" type="button"></button>
+                    <button aria-label="Slide 2" data-bs-slide-to="1" data-bs-target="#my" type="button"></button>
+                    <button aria-label="Slide 3" data-bs-slide-to="2" data-bs-target="#my" type="button"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100"
+                             src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100 h-100"
+                             src="https://images.pexels.com/photos/258092/pexels-photo-258092.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100"
+                             src="https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#my" type="button">
+                    <div class="icon">
+                        <span class="fas fa-arrow-left"></span>
+                    </div>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#my" type="button">
+                    <div class="icon">
+                        <span class="fas fa-arrow-right"></span>
+                    </div>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <p class="dis info my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate quos ipsa
+                sed officiis odio
+            </p>
+            <div class="radiobtn">
+                <input id="one" name="box" type="radio">
+                <input id="two" name="box" type="radio">
+                <input id="three" name="box" type="radio">
+                <label class="box py-2 first" for="one">
+                    <div class="d-flex align-items-start">
+                        <span class="circle"></span>
+                        <div class="course">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-bold">
+                                        Collection 01
+                                    </span>
+                                <span class="fas fa-dollar-sign">29</span>
+                            </div>
+                            <span>10 x Presets. Released in 2018</span>
+                        </div>
+                    </div>
+                </label>
+                <label class="box py-2 second" for="two">
+                    <div class="d-flex">
+                        <span class="circle"></span>
+                        <div class="course">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-bold">
+                                        Collection 01
+                                    </span>
+                                <span class="fas fa-dollar-sign">29</span>
+                            </div>
+                            <span>10 x Presets. Released in 2018</span>
+                        </div>
+                    </div>
+                </label>
+                <label class="box py-2 third" for="three">
+                    <div class="d-flex">
+                        <span class="circle"></span>
+                        <div class="course">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="fw-bold">
+                                        Collection 01
+                                    </span>
+                                <span class="fas fa-dollar-sign">29</span>
+                            </div>
+                            <span>10 x Presets. Released in 2018</span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="box-2">
+        <div class="box-inner-2">
+            <div>
+                <p class="fw-bold">Payment Details</p>
+                <p class="dis mb-3">Complete your purchase by providing your payment details</p>
+            </div>
+            <form action="">
+                <div class="mb-3">
+                    <p class="dis fw-bold mb-2">Email address</p>
+                    <input class="form-control" type="email" value="luke@skywalker.com">
+                </div>
+                <div>
+                    <p class="dis fw-bold mb-2">Card details</p>
+                    <div class="d-flex align-items-center justify-content-between card-atm border rounded">
+                        <div class="fab fa-cc-visa ps-3"></div>
+                        <input class="form-control" placeholder="Card Details" type="text">
+                        <div class="d-flex w-50">
+                            <input class="form-control px-0" placeholder="MM/YY" type="text">
+                            <input class="form-control px-0" maxlength=3 placeholder="CVV" type="password">
+                        </div>
+                    </div>
+                    <div class="my-3 cardname">
+                        <p class="dis fw-bold mb-2">Cardholder name</p>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="address">
+                        <p class="dis fw-bold mb-3">Billing address</p>
+                        <select aria-label="Default select example" class="form-select">
+                            <option hidden selected>United States</option>
+                            <option value="1">India</option>
+                            <option value="2">Australia</option>
+                            <option value="3">Canada</option>
+                        </select>
+                        <div class="d-flex">
+                            <input class="form-control zip" placeholder="ZIP" type="text">
+                            <input class="form-control state" placeholder="State" type="text">
+                        </div>
+                        <div class=" my-3">
+                            <p class="dis fw-bold mb-2">VAT Number</p>
+                            <div class="inputWithcheck">
+                                <input class="form-control" type="text" value="GB012345B9">
+                                <span class="fas fa-check"></span>
+
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column dis">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Subtotal</p>
+                                <p><span class="fas fa-dollar-sign"></span>33.00</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>VAT<span>(20%)</span></p>
+                                <p><span class="fas fa-dollar-sign"></span>2.80</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p class="fw-bold">Total</p>
+                                <p class="fw-bold"><span class="fas fa-dollar-sign"></span>35.80</p>
+                            </div>
+                            <div class="btn btn-primary mt-2">Pay<span class="fas fa-dollar-sign px-1"></span>35.80
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div th:fragment="left">
+    <nav class="pcoded-navbar">
+        <div class="sidebar_toggle">
+            <a href="#"><i class="icon-close icons"></i></a>
+        </div>
+        <div class="pcoded-inner-navbar main-menu">
+            <div class="">
+                <div class="main-menu-header">
+                    <img alt="User-Profile-Image"
+                         class="img-80 img-radius"
+                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <div class="user-details">
+                        <span id="more-details">[[${session.info.fullname}]]<i class="fa fa-caret-down"></i></span>
+                    </div>
+                </div>
+
+                <div class="main-menu-content">
+                    <ul>
+                        <li class="more-details"><a href="/seller/profile"><i
+                                class="ti-user"></i>View Profile</a> <a href="#!"><i
+                                class="ti-settings"></i>Settings</a> <a
+                                href="/seller/logout"><i
+                                class="ti-layout-sidebar-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pcoded-navigation-label"
+                 data-i18n="nav.category.navigation">Layout
+            </div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active"><a class="waves-effect waves-dark"
+                                      href="/seller/home"> <span class="pcoded-micon"><i
+                        class="ti-home"></i><b>D</b></span> <span class="pcoded-mtext"
+                                                                  data-i18n="nav.dash.main">Dashboard</span> <span
+                        class="pcoded-mcaret"></span>
+                </a></li>
+            </ul>
+            <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Store Manager</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-category/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Category</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-product/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Product</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-productimage/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Product Image</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-productdetail/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Product Detail</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-bill/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Bill</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+
+                <li><a class="waves-effect waves-dark"
+                       href="/seller/list-billdetail/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Bill Detail</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

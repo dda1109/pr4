@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{web/header::header}">
+
+</div>
+<div class="small-container cart-page">
+    <th:block th:if="${message}">
+        <h4 style="color: #2fff00">[[${message}]]</h4>
+    </th:block>
+    <table class="cart-item">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+        <th:block th:each="p : ${listBill}">
+            <tr>
+                <td>
+                    <div class="cart-info">
+
+                        <img alt="" th:src="@{'/api/uploadfile/upload/' + ${p.productId.thumbnailPhoto}}">
+                        <div>
+                            <p>[[${p.productId.name}]]</p>
+                            <small th:id="'price-' + ${p.productId.id}">Price: $ [[${p.productId.price}]]</small> <br>
+                            <small>Stock: [[${p.productId.quantity - p.productId.amount}]]</small> <br>
+                        </div>
+
+                    </div>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <input th:id="'quantity-input-' + ${p.productId.id}" class="quantity-input" type="number" min="1" th:max="${p.productId.quantity - p.productId.amount}" th:value="${p.quantity}" th:onchange="'updateCartItem(\'' + ${p.productId.id} + '\')'">
+                    </div>
+                </td>
+
+                <td th:id="'subtotal-' + ${p.productId.id}" >$ [[${p.productId.price*p.quantity}]]</td>
+                <td>
+                    <div class="btn" th:onclick="'removeCartItem(\'' + ${p.productId.id} + '\');'">Remove</div>
+                    <input th:id="'subtotal'+${p.productId.id}" th:value="${p.productId.price*p.quantity}"
+                           type="hidden">
+                </td>
+            </tr>
+        </th:block>
+        </th:block>
+        </th:block>
+    </table>
+
+    <div class="total-price">
+        <table>
+
+            <tr>
+                <td>Total</td>
+                <td th:id="total">$ [[${total}]]</td>
+            </tr>
+        </table>
+    </div>
+    <th:block th:if="${total} > 0">
+        <div class="btn-acpt">
+            <a class="btn" href="/payment">Accept</a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${total} == 0">
+        <div class="btn-acpt">
+            <div class="btn" style="background-color: #2b3d51">Accept</div>
+        </div>
+    </th:block>
+</div>
+<div th:replace="~{web/footer::footer}">
+
+</div>
+
+<!--custom_alert-->
+<link rel="stylesheet" href="/css/custom-alert.css">
+<script src="/js/custom-alert.js"></script>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menuToggle() {
+        if (MenuItems.style.maxHeight === "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+</script>
+
+<script>
+    function removeCartItem(productId) {
+        let message = "Bạn có muốn xóa sản phẩm này không?";
+        const subtotal = document.getElementById('subtotal' + productId).value;
+            $.ajax({
+                url: "/remove-cart/" + productId + "/" + subtotal,
+                type: "get",
+                success: function (response) {
+                    window.location = "/cart"
+                },
+                error: function (xhr) {
+
+                },
+            });
+    }
+    function updateCartItem(productId) {
+        // Make an AJAX request to update the cart item quantity
+        const quantityInput = document.getElementById('quantity-input-' + productId);
+        let quantity = quantityInput.value;
+        const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+
+        // Ensure the entered quantity does not exceed the maximum allowed quantity
+        if (parseInt(quantity) > maxQuantity) {
+            quantity = maxQuantity; // Set quantity to the maximum allowed quantity
+            quantityInput.value = maxQuantity; // Update the input field value
+            customAlert.alert("Không thể vượt quá số lượng còn lại.","Error"); // Display an alert to the user
+        }
+
+        if (quantity === 0) {
+            // If the quantity is 0, remove the item from the cart
+            removeCartItem(productId);
+            return;
+        }
+
+        $.ajax({
+            url: "/update-cart/" + productId + "/" + quantity,
+            type: "get",
+            success: function (response) {
+
+                // Update the quantity input value in the frontend
+                quantityInput.value = quantity;
+
+                // Get the price from the DOM using the price ID
+                const priceId = 'price-' + productId;
+                const price = parseFloat(document.getElementById(priceId).innerText.replace('Price: $ ', ''));
+
+                // Calculate the subtotal
+                const subtotal = price * quantity;
+                document.getElementById('subtotal-' + productId).innerText = '$ ' + subtotal.toFixed(1); // Add $ icon and round to 1 decimal places
+
+                // Update the total value
+                let total = 0;
+                document.querySelectorAll('td[id^="subtotal-"]')
+                    .forEach(subtotalElement => {
+                        total += parseFloat(subtotalElement.innerText.replace('$ ', ''));
+                    });
+                document.getElementById('total').innerText = '$ ' + total.toFixed(1); // Add $ icon and round to 1 decimal places
+            },
+            error: function (xhr) {
+                // Handle error response
+                console.error("Error updating cart item quantity.");
+            }
+        });
+    }
+
+
+
+
+</script>
+<script>
+    function calc() {
+        var price = document.getElementById("ticket_price").innerHTML;
+        var noTickets = document.getElementById("num").value;
+        var total = parseFloat(price) * noTickets
+        if (!isNaN(total))
+            document.getElementById("total").innerHTML = total
+    }
+</script>
+
+</body>
+</html>

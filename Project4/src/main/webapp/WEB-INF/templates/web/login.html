@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{web/header-login::header_login}">
+
+</div>
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img src="images/image1.png" width="100%">
+            </div>
+
+            <div class="col-2">
+                <div class="form-container">
+                    <div class="form-btn">
+                        <span onclick="login()">Login</span>
+                        <span onclick="register()">Register</span>
+                        <hr id="Indicator" style="transform: translateX(0px);">
+                    </div>
+
+                    <form action="/login" id="LoginForm" method="post" style="transform: translateX(300px);">
+                        <th:block th:if="${message1}">
+                            <p class="text-danger" style="color: red;">[[${message1}]]</p>
+                        </th:block>
+                        <input name="username" placeholder="Username" type="text" required>
+                        <input name="password" placeholder="Password" type="password" required>
+                        <button class="btn" type="submit">Login</button>
+                        <a href="/recover-password">Forgot password</a>
+                    </form>
+
+                    <form action="/register" class="form-register" id="RegForm" method="post" style="transform: translateX(300px);">
+                        <th:block th:if="${message2}">
+                            <p class="text-danger" style="color: red;">[[${message2}]]</p>
+                        </th:block>
+                        <input name="fullname" placeholder="Fullname" type="text" required>
+                        <input name="email" placeholder="Email" type="email" required>
+                        <input name="phone" placeholder="Phone" type="text" required>
+                        <input name="username" placeholder="Username" type="text" required>
+                        <input name="password" placeholder="Password" type="password" required>
+                        <button class="btn" type="submit">Register</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{web/footer::footer}">
+
+</div>
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+<!-- -------- js for toggle form -------- -->
+
+
+<script>
+    var LoginForm = document.getElementById("LoginForm");
+    var RegForm = document.getElementById("RegForm");
+    var Indicator = document.getElementById("Indicator")
+
+    function login() {
+        RegForm.style.transform = "translateX(300px)";
+        LoginForm.style.transform = "translateX(300px)";
+        Indicator.style.transform = "translateX(0px)";
+    }
+
+    function register() {
+        RegForm.style.transform = "translateX(0px)";
+        LoginForm.style.transform = "translateX(0px)";
+        Indicator.style.transform = "translateX(100px)";
+    }
+
+</script>
+
+</body>
+</html>

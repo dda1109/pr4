@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/userprofile.css}"/>
+
+</head>
+<body>
+<div th:replace="~{web/header::header}"></div>
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row" style="align-items: start!important; justify-content: normal;">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <th:block th:if="${session.info.linkAVT == null}">
+                    <img class="rounded-circle mt-5" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                         width="150px">
+                </th:block>
+                <th:block th:if="${session.info.linkAVT}">
+                    <img class="rounded-circle mt-5" th:src="@{'/api/uploadfile/upload/' + ${session.info.linkAVT}}"
+                         width="150px">
+                </th:block>
+                <span class="font-weight-bold">[[${session.info.fullname}]]</span>
+                <span class="text-black-50">[[${session.info.email}]]</span>
+                <br><br>
+                <div>
+                    <a href="/profile" style="text-decoration: none"> <i class="bi bi-backspace"
+                                                                         style="margin-right: 3px"></i> Go Back to
+                        Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 border-right" style="flex: 2 0 auto; padding-top: 30px">
+            <div class="container">
+                <h2>Transaction History</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="p : ${billList}">
+                        <tr>
+                            <td>[[${p.date}]]</td>
+                            <td>
+                                <ul style="padding-left: 0">
+                                    <th:block th:each="t : ${billDetailList}" th:if="${t.billId.id == p.id}">
+                                        <li>[[${t.quantity +" "+t.productId.name + "( "+t.productId.price+"$"+" )"}]]
+                                        </li>
+
+                                    </th:block>
+                                </ul>
+                            </td>
+                            <td>[[${p.total}]]$</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div th:replace="~{web/footer::footer}"></div>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+</body>
+</html>

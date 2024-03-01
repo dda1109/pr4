@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/payment.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+</head>
+<style>
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+</style>
+<body>
+<div class="logo">
+    <a href="/home"><img src="images/logo.png" width="125px"></a>
+</div>
+<form action="/payment-confirm">
+    <div class="container d-lg-flex">
+        <div class="box-1 bg-light user">
+            <div class="d-flex align-items-center mb-3">
+                <th:block th:if="${session.info.linkAVT == null}">
+                    <img alt=""
+                         class="pic rounded-circle" src="https://images.pexels.com/photos/4925916/pexels-photo-4925916.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+                </th:block>
+
+                <th:block th:if="${session.info.linkAVT}">
+                    <img alt=""
+                         class="pic rounded-circle" th:src="@{'/api/uploadfile/upload/' + ${session.info.linkAVT}}">
+                </th:block>
+                <p class="ps-2 name">[[${session.info.fullname}]]</p>
+            </div>
+            <div class="box-inner-1 pb-3 mb-3 ">
+                <div class="d-flex justify-content-between mb-3 userdetails">
+                    <p class="fw-bold">Bill Total</p>
+                    <p class="fw-lighter"><span class="fas fa-dollar-sign"></span>[[${total}]]</p>
+                </div>
+                <p class="fw-bold">Addess</p>
+                <th:block th:if="${addressList.size() == 0}">
+                    <input class="form-control" id="address" name="address" placeholder="Address Details" type="text">
+                </th:block>
+                <th:block th:if="${addressList.size() > 0}">
+                    <select aria-label="Default select example" class="form-select">
+                        <option selected>Select Addess</option>
+                        <th:block th:each="p : ${addressList}">
+                            <option value="1">[[${p.description}]]</option>
+                        </th:block>
+                    </select>
+                </th:block>
+
+            </div>
+        </div>
+
+
+        <div class="box-2">
+            <div class="box-inner-2">
+                <div>
+                    <p class="fw-bold">Payment Details</p>
+                    <p class="dis mb-3">Complete your purchase by providing your payment details</p>
+                </div>
+                <div class="mb-3">
+                    <p class="dis fw-bold mb-2">Email address</p>
+                    <input class="form-control" id="email" name="email" th:value="${session.info.email}" type="email">
+                </div>
+                <div>
+                    <p class="dis fw-bold mb-2">Card details</p>
+                    <div class="d-flex align-items-center justify-content-between card-atm border rounded">
+                        <div class="fab fa-cc-visa ps-3"></div>
+                        <th:block th:if="${cardList.size() == 0}">
+                            <input class="form-control" id="card" name="card" placeholder="Card Details" type="text">
+                        </th:block>
+                        <th:block th:if="${cardList.size() > 0}">
+                            <select class="form-control">
+                                <option selected>Select Card</option>
+                                <th:block th:each="p : ${cardList}">
+                                    <option value="1">[[${p.Bank + " : " + p.number }]]</option>
+                                </th:block>
+                            </select>
+                        </th:block>
+                    </div>
+                    <div class="my-3 cardname">
+                        <p class="dis fw-bold mb-2">Cardholder name</p>
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="address">
+                        <p class="dis fw-bold mb-3">Billing address</p>
+                        <select aria-label="Default select example" class="form-select">
+                            <option hidden selected>Select Country</option>
+                            <option value="1">VietNam</option>
+                            <option value="2">USA</option>
+                            <option value="3">Canada</option>
+                        </select>
+                        <div class="d-flex">
+                            <input class="form-control zip" placeholder="ZIP" type="text">
+                            <input class="form-control state" placeholder="State" type="text">
+                        </div>
+                        <div class=" my-3">
+                            <p class="dis fw-bold mb-2">VAT Number</p>
+                            <div class="inputWithcheck">
+                                <input class="form-control" type="text" value="GB012345B9">
+                                <span class="fas fa-check"></span>
+
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column dis">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>Subtotal</p>
+                                <p><span class="fas fa-dollar-sign"></span>[[${total}]]</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p>VAT<span>(0%)</span></p>
+                                <p><span class="fas fa-dollar-sign"></span>0.00</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <p class="fw-bold">Total</p>
+                                <p class="fw-bold"><span class="fas fa-dollar-sign"></span>[[${total}]]</p>
+                            </div>
+                            <button class="btn btn-primary mt-2" type="submit">Pay<span
+                                    class="fas fa-dollar-sign px-1"></span>[[${total}]]
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+</body>
+</html>

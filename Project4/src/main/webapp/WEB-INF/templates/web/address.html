@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/userprofile.css}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+<body style="font-size: 16px">
+<div th:replace="~{web/header::header}"></div>
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row" style="align-items: start!important; justify-content: normal;">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <th:block th:if="${session.info.linkAVT == null}">
+                    <img class="rounded-circle mt-5" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                         width="150px">
+                </th:block>
+                <th:block th:if="${session.info.linkAVT}">
+                    <img class="rounded-circle mt-5" th:src="@{'/api/uploadfile/upload/' + ${session.info.linkAVT}}"
+                         width="150px">
+                </th:block>
+                <span class="font-weight-bold">[[${session.info.fullname}]]</span>
+                <span class="text-black-50">[[${session.info.email}]]</span>
+                <br><br>
+                <div>
+                    <a href="/profile" style="text-decoration: none"> <i class="bi bi-backspace"
+                                                                         style="margin-right: 3px"></i> Go Back to
+                        Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 border-right" style="flex: 2 0 auto; padding-top: 30px">
+            <th:block th:if="${message}">
+                <h4 style="color: #0c8940">[[${message}]]</h4>
+            </th:block>
+            <div class="container" style="width: 100%">
+                <div style="position: relative">
+                    <h2>Your Address</h2>
+                    <th:block th:if="${ListAddress.size() < 10}">
+                        <a class="add" data-toggle="modal" href="#addEmployeeModal"
+                           style="  position: absolute; top: 0px; right: 0px; padding: 10px; text-decoration: none;"><i
+                                class="bi bi-plus-circle"></i>
+                            <span>New Address</span></a></th:block>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Address</th>
+                        <th style="text-align: end;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:if="${ListAddress.size() > 0}">
+                        <th:block th:each="i : ${#numbers.sequence(0, ListAddress.size()-1)}">
+                            <tr th:with="address=${ListAddress.get(i)}">
+                                <td>[[${i + 1}]]</td>
+                                <td>[[${address.description}]]</td>
+                                <td style="text-align: end;">
+                                    <a class="edit"
+                                       data-toggle="modal" href="#editEmployeeModal"
+                                       th:onclick="Edit([[${address.description}]], [[${address.id}]])">
+                                        <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+
+                                    <a class="delete" data-toggle="modal" href="#deleteEmployeeModal"
+                                       th:onclick="Delete([[${address.id}]])">
+                                        <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="clearfix" style="padding: 20px">
+                <div class="hint-text">
+                    You can have 10 address
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal HTML -->
+<div class="modal fade" id="addEmployeeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/add-address">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Address</h4>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input class="form-control" id="addAddress" name="addAddress" required type="text">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+                    <input class="btn btn-success" type="submit" value="Add">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal HTML -->
+<div class="modal fade" id="editEmployeeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/edit-address">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Address</h4>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input class="form-control" id="editAddress" name="editAddress" required type="text">
+                        <input class="form-control" id="editID" name="editID" required type="hidden">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+                    <input class="btn btn-info" type="submit" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal HTML -->
+<div class="modal fade" id="deleteEmployeeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/delete-address">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Address</h4>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Address?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    <input id="idAddress" name="idAddress" required type="hidden">
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{web/footer::footer}"></div>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+<script>
+    function Edit(address, id) {
+        document.getElementById('editAddress').value = address;
+        document.getElementById('editID').value = id;
+    }
+</script>
+
+<script>
+    function Delete(id) {
+        document.getElementById('idAddress').value = id;
+    }
+</script>
+
+</body>
+</html>

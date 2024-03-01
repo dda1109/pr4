@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<div style="background-color: #FFFFFF" th:fragment="header">
+    <div class="container">
+        <div class="navbar navbar-product"
+             style="padding-bottom: 0px; padding-top: 0px; margin-bottom: 0px; min-height: 0px; border: none">
+            <div class="logo">
+                <a href="/home"><img th:src="@{/images/logo.png}" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/products/0/page/1">Products</a></li>
+
+                    <th:block th:if="${session.account != null}">
+                        <li><a href="/profile">Hello [[${session.info.fullname}]]</a></li>
+                        <li><a href="/logout">Log out</a></li>
+                    </th:block>
+
+                    <th:block th:if="${session.account == null}">
+                        <li><a href="/login">Log in</a></li>
+
+                    </th:block>
+                </ul>
+            </nav>
+            <div style="position: relative">
+
+                <a href="/cart"><img height="30px" style="margin-right: 10px;" th:src="@{/images/cart.png}"
+                                     width="30px">
+<!--                    <th:block th:if="${count > 0}">-->
+                        <span class="cart-badge" style="color: black; position: absolute; bottom: 0; right: 0">[[${count}]]</span>
+<!--                    </th:block>-->
+
+                </a>
+
+
+            </div>
+            <img class="menu-icon" onclick="menuToggle()" th:src="@{/images/menu.png}">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

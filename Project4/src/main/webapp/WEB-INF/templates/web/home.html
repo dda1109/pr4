@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <!--    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">-->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20201229/pngtree-stylish-luxury-white-minimalist-polygonal-decoration-background-with-silver-lines-in-image_518040.jpg   ');
+            background-repeat: repeat;
+            background-size: contain; /* hoặc contain tùy thuộc vào sự lựa chọn của bạn */
+            background-position: center center;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{web/header-home::header_home}">
+
+</th:block>
+<div class="categories">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <img src="https://product.hstatic.net/1000295867/product/giay-adidas-neo-gradas-white-black-gum-fw3378-8_183ae3cf6f3a4314a3d0b8487a046a33_grande.jpg">
+            </div>
+            <div class="col-3">
+                <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/641ca1a4fe0643068371aef900c3a51e_9366/Giay_Ultrabounce_trang_HP5771_01_standard.jpg">
+            </div>
+            <div class="col-3">
+                <!--                <img src="images/category-3.jpg">-->
+                <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/763aac638a2e4c68964eadfd00d75936_9366/Giay_adidas_4D_FWD_x_Parley_trang_GZ8625_01_standard.jpg">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ------- featured products ------- -->
+<div class="small-container">
+    <h2 class="title">Featured Products</h2>
+    <div class="row">
+
+        <th:block th:each="p : ${listtop8product}">
+
+            <div class="col-4">
+                <a th:href="@{'/product-detail/'+${p.id}+'/'+${p.category.id}}">
+                    <img th:src="@{'/api/uploadfile/upload/' + ${p.thumbnailPhoto}}"></a>
+                <h4>[[${p.name}]]</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>[[${p.price}]] $</p>
+            </div>
+
+        </th:block>
+
+    </div>
+    <h2 class="title">Latest Products</h2>
+    <div class="row">
+        <th:block th:each="p : ${listlast4product}">
+            <div class="col-4">
+                <a th:href="@{'/product-detail/'+${p.id}+'/'+${p.category.id}}">
+                    <img th:src="@{'/api/uploadfile/upload/' + ${p.thumbnailPhoto}}"></a>
+                <h4>[[${p.Name}]]</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>[[${p.price}]] $</p>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<!-- ------- offer ------- -->
+<div class="offer">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-2">
+                <img class="offer-img" src="images/exclusive.png">
+            </div>
+            <div class="col-2">
+                <p>Exclusively Available on RedStore</p>
+                <h1>Nike</h1>
+                <small>Thiết kế độc đáo đến từ thương hiệu NIKE, mang đến cảm giác mới mẻ, trẻ trung giúp người dùng có
+                    trải nghiệm tốt nhất.</small>
+                <br>
+                <!--                <a href="/product-detail/47/10" class="btn">Buy Now &#8594;</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------- testimonial ------- -->
+
+<div class="testimonial">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Đoàn kết.</br>
+                    Giá trị mang lại là vô cùng lớn đối với doanh nghiệp.
+
+                </p>
+
+
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <img src="images/user-1.png">
+                <h3></h3>
+            </div>
+
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p> Giá trị cốt lõi</br>
+                    Đem lại cho khách hàng trải nghiệm tốt nhất về sản phẩm </p>
+
+
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <img src="images/user-2.png">
+                <h3></h3>
+            </div>
+
+            <div class="col-3">
+                <i class="fa fa-quote-left"></i>
+                <p>Luôn cố gắng, hoàn thiện và phát triển đem lại cho mọi người nhưng sản phẩm tốt nhất</br>
+                    <!--                    ~ Đô La chưởng</br>-->
+                    <!--                    ~ Erou chỉ</br>-->
+                    <!--                    ~ Kim cương chảo</br>-->
+
+                    <!--                    Ưu điểm: Rất nhiều t.iền</br>-->
+                    <!--                    còn nhược điểm : Có rất nhiều ưu điểm-->
+                </p>
+
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <img src="images/user-3.png">
+                <h3></h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- ------- brands ------- -->
+<div class="brands">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-5">
+                <img alt="" src="images/logo-godrej.png">
+            </div>
+            <div class="col-5">
+                <img alt="" src="images/logo-oppo.png">
+            </div>
+            <div class="col-5">
+                <img alt="" src="images/logo-coca-cola.png">
+            </div>
+            <div class="col-5">
+                <img alt="" src="images/logo-paypal.png">
+            </div>
+            <div class="col-5">
+                <img alt="" src="images/logo-philips.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{web/footer::footer}">
+
+</th:block>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+</body>
+</html>

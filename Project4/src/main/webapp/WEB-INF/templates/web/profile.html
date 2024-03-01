@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/userprofile.css}"/>
+
+</head>
+<body>
+<div th:replace="~{web/header::header}"></div>
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row" style="align-items: start!important">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <th:block th:if="${session.info.linkAVT == null}">
+                    <img class="rounded-circle mt-5" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                         width="150px">
+                </th:block>
+                <th:block th:if="${session.info.linkAVT}">
+                    <img class="rounded-circle mt-5" th:src="@{'/api/uploadfile/upload/' + ${session.info.linkAVT}}"
+                         width="150px">
+                </th:block>
+                <span class="font-weight-bold">[[${session.info.fullname}]]</span>
+                <span class="text-black-50">[[${session.info.email}]]</span>
+
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary profile-button" data-target="#exampleModal" data-toggle="modal"
+                        type="button">
+                    Change avatar
+                </button>
+
+                <div class="d-flex justify-content-between align-items-center mb-3" style="color: red"
+                     th:if="${message3}">
+                    <span class="text-right">[[${message3}]]</span>
+                </div>
+
+                <!-- Modal -->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal"
+                     role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="/change-avt" enctype="multipart/form-data" method="post">
+                                <div class="modal-body">
+                                    <h3>Tải ảnh avatar mới</h3>
+                                    <input name="avatar" onchange="readURL(this);" type="file"><br>
+                                    <th:block th:if="${session.info.linkAVT == null}">
+                                        <img alt="your avatar" height="50%"
+                                             id="blah"
+                                             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" width="50%">
+                                    </th:block>
+                                    <th:block th:if="${session.info.linkAVT}">
+                                        <img alt="your avatar" height="50%"
+                                             id="blah" th:src="@{'/api/uploadfile/upload/' + ${session.info.linkAVT}}"
+                                             width="50%">
+                                    </th:block>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br>
+                <div>
+                    <a href="/transaction-history" style="text-decoration: none"> <i class="bi bi-clock-history"
+                                                                                     style="margin-right: 2px"></i>
+                        Transaction history</a>
+                </div>
+
+                <div style="margin-top: 10px">
+                    <a href="/address" style="text-decoration: none"><i class="bi bi-card-list"
+                                                                        style="margin-right: 2px"></i> List Address</a>
+                </div>
+                <div>
+                    <a href="/card" style="text-decoration: none"><i class="bi bi-card-list"
+                                                                     style="margin-right: 2px"></i> List Card</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 border-right">
+            <form action="/edit-profile" method="post">
+                <div class="p-3 py-5">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3" style="color: red"
+                         th:if="${message1}">
+                        <span class="text-right">[[${message1}]]</span>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Full Name</label>
+                            <input class="form-control" name="fullname" placeholder="Full Name" th:value="${session.info.fullname}"
+                                   type="text">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Phone Number</label>
+                            <input class="form-control" name="phone" placeholder="Phone number" th:value="${session.info.phone}"
+                                   type="text">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input class="form-control" name="email" placeholder="Email" th:value="${session.info.email}"
+                                   type="email">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Username</label>
+                            <input class="form-control" name="username" placeholder="Username" th:value="${session.account.userName}"
+                                   type="text">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Birthday</label>
+                            <input class="form-control" name="birthday" placeholder="Birthday" th:value="${session.info.bithday}"
+                                   type="date">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center" style="padding-top: 3px">
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form action="/change-password" method="post">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><h4 class="text-right">
+                        Change Password</h4></div>
+                    <br>
+                    <div class="d-flex justify-content-between align-items-center mb-3" style="color: red"
+                         th:if="${message2}">
+                        <span class="text-right">[[${message2}]]</span>
+                    </div>
+                    <br>
+                    <div class="col-md-12">
+                        <label class="labels">Old Password</label>
+                        <input class="form-control" name="oldpassword" placeholder="Old password" type="password"
+                               value="">
+                    </div>
+                    <br>
+                    <div class="col-md-12">
+                        <label class="labels">New Password</label>
+                        <input class="form-control" name="newpassword" placeholder="New password" type="password"
+                               value="">
+                    </div>
+                    <br>
+                    <div class="col-md-12">
+                        <label class="labels">Confirm Password</label>
+                        <input class="form-control" name="confirmpassword" placeholder="Confirm password"
+                               type="password" value="">
+                    </div>
+                    <br>
+                    <br>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Save Password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{web/footer::footer}"></div>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result).width(150).height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+
+</body>
+</html>

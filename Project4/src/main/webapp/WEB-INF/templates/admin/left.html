@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div th:fragment="left">
+    <nav class="pcoded-navbar">
+        <div class="sidebar_toggle">
+            <a href="#"><i class="icon-close icons"></i></a>
+        </div>
+        <div class="pcoded-inner-navbar main-menu">
+            <div class="">
+                <div class="main-menu-header">
+                    <img alt="User-Profile-Image"
+                         class="img-80 img-radius"
+                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <div class="user-details">
+                        <span id="more-details">[[${session.info.fullname}]]<i class="fa fa-caret-down"></i></span>
+                    </div>
+                </div>
+
+                <div class="main-menu-content">
+                    <ul>
+                        <li class="more-details"><a href="/admin/profile?check=3"><i
+                                class="ti-user"></i>View Profile</a> <a href="#!"><i
+                                class="ti-settings"></i>Settings</a> <a
+                                href="/admin/logout"><i
+                                class="ti-layout-sidebar-left"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pcoded-navigation-label"
+                 data-i18n="nav.category.navigation">Layout
+            </div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="active"><a class="waves-effect waves-dark"
+                                      href="/admin/home"> <span class="pcoded-micon"><i
+                        class="ti-home"></i><b>D</b></span> <span class="pcoded-mtext"
+                                                                  data-i18n="nav.dash.main">Dashboard</span> <span
+                        class="pcoded-mcaret"></span>
+                </a></li>
+
+            </ul>
+            <div class="pcoded-navigation-label" data-i18n="nav.category.forms">User Manager</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li><a class="waves-effect waves-dark"
+                       href="/admin/list-user/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">User Account</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+                <li><a class="waves-effect waves-dark"
+                       href="/admin/list-customerinfo/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Customer Info</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+                <li><a class="waves-effect waves-dark"
+                       href="/admin/list-address/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">User Address</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+                <li><a class="waves-effect waves-dark"
+                       href="/admin/list-card/1"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">User Card</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+
+            </ul>
+            <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Report
+                &amp; Statistic
+            </div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li><a class="waves-effect waves-dark"
+                       href="/admin/statistics"> <span class="pcoded-micon"><i
+                        class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
+                                                                     data-i18n="nav.form-components.main">Revenue ratio</span>
+                    <span
+                            class="pcoded-mcaret"></span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="~{web/header::header}"></div>
+<div class="small-container container-box">
+
+    <div class="row row-2">
+        <h2>All Products</h2>
+
+        <div class="search-text">
+            <form action="/search" method="get">
+                <input name="text" placeholder="Search products..." th:value="${txtSearch}" type="text">
+
+                <input name="pagenumber" th:value="${1}" type="hidden">
+            </form>
+        </div>
+        <h3>Brands</h3>
+        <select onchange="location = this.value;">
+            <option value="/product/0/page/1">Select
+                Category
+            </option>
+            <th:block th:each="t : ${listAllCategory}">
+                <option th:class="${t.id == targetactive ? 'selected' : '' }"
+                        th:value="@{'/products/'+${t.id}+'/page/'+${1}}">[[${t.name}]]
+                </option>
+            </th:block>
+        </select>
+    </div>
+
+    <div class="row">
+        <th:block th:each="p : ${listAllProduct}">
+            <div class="col-4">
+                <a th:href="@{'/product-detail/'+${p.id}+'/'+${p.category.id}}"><img
+                        th:src="@{'/api/uploadfile/upload/' + ${p.thumbnailPhoto}}"></a>
+                <h4 name="name">[[${p.name}]]</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p name="price">[[${p.price}]]$</p>
+                <th:block th:if="${p.amount < p.quantity}">
+                    <div class="btn" th:onclick="'addProductToCart(\'' + ${p.id} + '\');'">Add To Cart</div>
+                    <input id="quantity" type="hidden" value="1">
+                </th:block>
+
+                <th:block th:if="${p.amount >= p.quantity}">
+                    <div class="btn" style="background-color: #2b3d51">Sold out</div>
+                </th:block>
+            </div>
+        </th:block>
+    </div>
+    <div class="page-btn">
+        <th:block th:if="${isSearch}">
+            <th:block th:if="${tag>1}">
+                <a th:href="@{'/search?text='+${txtSearch}+'&pagenumber='+ ${tag - 1 }}">
+                    <span>&#8592;</span></a>
+            </th:block>
+            <th:block th:each="i : ${#numbers.sequence(1, endPage)}">
+                <a -- th:href="@{'/search?text='+${txtSearch}+'&pagenumber='+${i}}">
+                    <span th:class=" ${tag == i ? 'active-btn' : '' }">[[${i }]]</span>
+                </a>
+            </th:block>
+
+            <th:block th:if="${tag<endPage}">
+                <a th:href="@{'/search?text='+${txtSearch}+'&pagenumber='+ ${tag + 1 }}">
+                    <span>&#8594;</span></a>
+            </th:block>
+        </th:block>
+
+        <th:block th:if="${!isSearch}">
+            <th:block th:if="${tag>1}">
+                <a th:href="@{'/products/'+${targetactive }+'/page/'+ ${tag - 1 }}">
+                    <span>&#8592;</span></a>
+            </th:block>
+            <th:block th:each="i : ${#numbers.sequence(1, endPage)}">
+                <a -- th:href="@{'/products/'+${targetactive}+'/page/'+${i}}">
+                    <span th:class=" ${tag == i ? 'active-btn' : '' }">[[${i }]]</span>
+                </a>
+            </th:block>
+
+
+            <th:block th:if="${tag<endPage}">
+                <a th:href="@{'/products/'+${targetactive }+'/page/'+ ${tag + 1 }}">
+                    <span>&#8594;</span></a>
+            </th:block>
+        </th:block>
+    </div>
+</div>
+
+<div th:replace="~{web/footer::footer}"></div>
+
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+</script>
+<!--custom_alert-->
+<link rel="stylesheet" href="/css/custom-alert.css">
+<script src="/js/custom-alert.js"></script>
+<script>
+    function addProductToCart(id) {
+        const quantity = document.getElementById('quantity').value;
+        const xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+
+                    const response = xhr.responseText;
+                    const parts = response.split("-");
+                    const message = parts[0];
+                    const cartCount = parts[1];
+                    const cartBadge = document.querySelector('.cart-badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = cartCount; // Update the cart count in the header
+                    }
+                    customAlert.alert(message,"Success"); // Optional: Display a success message
+
+                } else {
+                    customAlert.alert(xhr.responseText,"Error");
+                }
+            }
+        };
+
+        xhr.open("GET", "/add-to-cart/" + id + "/" + quantity);
+        xhr.send();
+    }
+
+
+</script>
+
+</body>
+</html>

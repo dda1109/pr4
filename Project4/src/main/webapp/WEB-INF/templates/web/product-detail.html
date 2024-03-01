@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cửa hàng giày số 1 việt nam</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link crossorigin href="https://fonts.gstatic.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom-alert.css">
+</head>
+<body>
+<div th:replace="~{web/header::header}"></div>
+<div class="small-container single-product">
+    <div class="row">
+
+        <div class="col-2">
+            <img class="product-img" id="productImg" th:src="@{'/api/uploadfile/upload/'+${product.thumbnailPhoto}}"
+                 width="100%">
+
+            <div class="small-img-row">
+                <th:block th:each="p : ${listImageOfProduct}">
+                    <div class="small-img-col">
+                        <img alt="" class="small-img" th:src="@{'/api/uploadfile/upload/'+${p.link}}">
+                    </div>
+                </th:block>
+            </div>
+
+        </div>
+
+        <div class="col-2">
+            <span>[[${product.category.name}]]</span>
+            <h1>[[${product.name}]]</h1>
+            <h4>[[${product.price}]] $</h4>
+            <span>Quantity : [[${product.quantity}]]</span><br>
+            <span>Rest : [[${product.quantity - product.amount}]]</span>
+
+            <br>
+            <th:block th:if="${product.amount < product.quantity}">
+                <span style="font-size:16px;">Số lượng:
+                    <input id="quantity" min="1" name="quantity" style="padding: 8px 10px;outline:none;" th:max="${product.quantity - product.amount}"
+                           type="number" value="1"></span>
+                <div class="btn" th:onclick="'addProductToCart(\'' + ${product.id} + '\');'" type="submit"> Add to
+                    Cart
+                </div>
+            </th:block>
+
+            <th:block th:if="${product.amount >= product.quantity}">
+                <div class="btn" style="background-color: #2b3d51">Sold out</div>
+            </th:block>
+            <br>
+            <h4><p>Brand: [[${detail.brand}]]</p></h4>
+            <h5><p>Color: [[${detail.color}]]</p></h5>
+            <h5><p>Description: [[${detail.description}]]</p></h5>
+            <h5><p>Material: [[${detail.material}]]</p></h5>
+        </div>
+
+    </div>
+</div>
+
+<!-- ------ title ------ -->
+<div class="small-container">
+    <div class="row row-2">
+        <h2>Related Products</h2>
+        <a href="/products/0/page/1"><p>View More</p></a>
+    </div>
+</div>
+
+<!-- ----- products ----- -->
+
+<div class="small-container">
+
+    <div class="row">
+        <th:block th:each=" u : ${listProductSame}">
+            <div class="col-4">
+                <a th:href="@{'/product-detail/'+${u.id}+'/'+${u.category.id}}">
+                    <img th:src="@{'/api/uploadfile/upload/'+${u.thumbnailPhoto}}"></a>
+                <h4>[[${u.name}]]</h4>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>[[${u.price}]] $</p>
+            </div>
+        </th:block>
+    </div>
+</div>
+<div th:replace="~{web/footer::footer}"></div>
+<!-- -------- js for toggle menu -------- -->
+<script>
+    var MenuItems = document.getElementById("MenuItems");
+
+    MenuItems.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if (MenuItems.style.maxHeight == "0px") {
+            MenuItems.style.maxHeight = "200px"
+        } else {
+            MenuItems.style.maxHeight = "0px"
+        }
+    }
+</script>
+
+
+<script>
+    var ProductImg = document.getElementById("productImg");
+    var SmallImg = document.getElementsByClassName("small-img");
+
+    SmallImg[0].onmouseover = function () {
+        ProductImg.src = SmallImg[0].src;
+    }
+
+    SmallImg[1].onmouseover = function () {
+        ProductImg.src = SmallImg[1].src;
+    }
+
+    SmallImg[2].onmouseover = function () {
+        ProductImg.src = SmallImg[2].src;
+    }
+
+    SmallImg[3].onmouseover = function () {
+        ProductImg.src = SmallImg[3].src;
+    }
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+
+</script>
+<!--custom_alert-->
+<script src="js/custom-alert.js"></script>
+<script>
+    function addProductToCart(id) {
+        const quantity = document.getElementById('quantity').value;
+        $.ajax({
+            url: "/add-to-cart/" + id + "/" + quantity,
+            type: "get",
+            success: function (response) {
+                customAlert.alert(response,"Success")
+            },
+            error: function (xhr) {
+            },
+        });
+    }
+</script>
+</body>
+</html>
